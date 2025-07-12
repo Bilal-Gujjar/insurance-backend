@@ -5,10 +5,10 @@ export const getRecommendationLogic = (
   riskTolerance: string
 ) => {
   const planType = 'Term Life';
-  const coverageAmount = income * 12; // 12x annual income
+  const coverageAmount = income * 12; 
   let termYears = 20;
 
-  // Adjust term based on risk and age
+
   if (riskTolerance === 'Conservative') {
     termYears = age >= 40 ? 10 : 15;
   } else if (riskTolerance === 'Aggressive') {
