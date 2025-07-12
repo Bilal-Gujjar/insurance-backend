@@ -4,19 +4,28 @@ export const getRecommendationLogic = (
   dependents: number,
   riskTolerance: string
 ) => {
-  let recommendation = '';
-  let explanation = '';
+  const planType = 'Term Life';
+  const coverageAmount = income * 12; // 12x annual income
+  let termYears = 20;
 
-  if (age < 40 && riskTolerance === 'High') {
-    recommendation = 'Term Life – $500,000 for 20 years';
-    explanation = 'You’re young and have high risk tolerance. Term life is affordable and flexible.';
-  } else if (age >= 40 && riskTolerance === 'Low') {
-    recommendation = 'Whole Life – $250,000';
-    explanation = 'You prefer stability and long-term benefits. Whole life insurance suits you.';
-  } else {
-    recommendation = 'Term Life – $250,000 for 10 years';
-    explanation = 'Balanced coverage for your profile.';
+  // Adjust term based on risk and age
+  if (riskTolerance === 'Conservative') {
+    termYears = age >= 40 ? 10 : 15;
+  } else if (riskTolerance === 'Aggressive') {
+    termYears = age < 40 ? 25 : 20;
+  } else if (riskTolerance === 'Balanced') {
+    termYears = 15;
   }
 
-  return { recommendation, explanation };
+  const monthlyPremium = Math.round((coverageAmount / 1000) * 2.4); // Example calc
+
+  const details = `Based on your profile, we recommend ${planType} insurance with $${coverageAmount.toLocaleString()} coverage for ${termYears} years. This provides 12x your annual income, ensuring comprehensive financial security for your dependents.`;
+
+  return {
+    planType,
+    coverageAmount,
+    termYears,
+    monthlyPremium,
+    details
+  };
 };

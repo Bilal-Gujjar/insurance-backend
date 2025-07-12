@@ -9,13 +9,30 @@ export const getRecommendation = async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Missing fields' });
   }
 
-  const { recommendation, explanation } = getRecommendationLogic(
-    age, income, dependents, riskTolerance
-  );
+  const {
+    planType,
+    coverageAmount,
+    termYears,
+    monthlyPremium,
+    details
+  } = getRecommendationLogic(age, income, dependents, riskTolerance);
 
-  const result = await prisma.recommendationInput.create({
-    data: { age, income, dependents, riskTolerance, recommendation, explanation }
+  await prisma.recommendationInput.create({
+    data: {
+      age,
+      income,
+      dependents,
+      riskTolerance,
+      recommendation: `${planType} – $${coverageAmount.toLocaleString()} for ${termYears} years`,
+      explanation: details
+    }
   });
 
-  res.status(200).json(result);
+  return res.status(200).json({
+    planType,
+    coverageAmount,
+    termYears,
+    monthlyPremium,
+    details
+  });
 };
