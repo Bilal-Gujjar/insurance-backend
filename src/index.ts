@@ -20,6 +20,10 @@ app.use((req, res, next) => {
 
 app.use(limiter);
 
+app.get('/health', (req, res) => {
+  res.send('API is healthy');
+});
+
 app.use('/api/v1/recommendation', recommendationRoutes);
 
 const PORT = process.env.PORT || 4000;
