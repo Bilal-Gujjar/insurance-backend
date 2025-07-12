@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 app.use(limiter);
 
-app.use('/recommendation', recommendationRoutes);
+app.use('/api/v1/recommendation', recommendationRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
